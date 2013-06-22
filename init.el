@@ -2,6 +2,7 @@
 ;; Better dead than smeg.
 ;; ----------------------
 
+(set-face-attribute 'default nil :height 130)
 
 ;; Add .emacs.d to load-path
 (setq dotfiles-dir (file-name-directory
@@ -144,7 +145,5 @@
 	  "/Library/Application Support/cocoAspell/aspell6-en-6.0-0")
 	 nil iso-8859-1)))
 
-;; Project specific hack for now (REMOVE IF YOU'RE PILLAGING THIS CONFIG)
-(setenv "CLJ_FE_ZK_ROOT" "clj-fe-jon")
-
 (visual-line-mode)
+(put 'erase-buffer 'disabled nil)

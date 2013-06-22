@@ -19,13 +19,17 @@
 ;;(color-theme-sanityinc-solarized-light)
 ;;(color-theme-sanityinc-solarized-dark)
 
+;; Color theme TextMate SunBurst
+(require 'sunburst-theme)
+(load-theme 'sunburst t)
+
 ;; Currently I'm using Tomorrow (starker contrast)
-(require 'color-theme-sanityinc-tomorrow)
-(color-theme-sanityinc-tomorrow-night)
+;;(require 'color-theme-sanityinc-tomorrow)
+;;(color-theme-sanityinc-tomorrow-night)
 ;;(color-theme-sanityinc-tomorrow-bright)
 
 ;; Font size
-(set-face-attribute 'default nil :height 130)
+(set-face-attribute 'default nil :height 140)
 
 ;; Scrolling
 (setq scroll-step 1)
