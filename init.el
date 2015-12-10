@@ -1,5 +1,16 @@
 (require 'package)
 (package-initialize)
+(package-refresh-contents)
+;; Add .emacs.d to load-path
+(setq dotfiles-dir (file-name-directory
+                    (or (buffer-file-name) load-file-name)))
+(add-to-list 'load-path dotfiles-dir)
+(setq package-user-dir (concat dotfiles-dir "elpa"))
+
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
 
 ;; Install packages for clean .emacs.d (no /elpa dir)
 (unless (package-installed-p 'cider)
@@ -31,35 +42,21 @@
 
 (unless (package-installed-p 'undo-tree)
   (package-install 'undo-tree))
+
+(unless (package-installed-p 'magit)
+  (package-install 'magit))
 ;; END
 
 (require 'exec-path-from-shell)
 (require 'multiple-cursors)
 (require 'paredit)
 
-;; Add .emacs.d to load-path
-(setq dotfiles-dir (file-name-directory
-                    (or (buffer-file-name) load-file-name)))
-(add-to-list 'load-path dotfiles-dir)
-
-(setq package-user-dir (concat dotfiles-dir "elpa"))
-
-(add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/") t)
-
-
-
 ;; Inherit $PATH from shell (for lein etc.)
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 
-
 (load-theme 'solarized-dark t)
-
 (setq x-underline-at-descent-line t)
-
 
 ;; Key settings
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
