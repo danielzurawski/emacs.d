@@ -89,6 +89,7 @@
 (add-hook 'lisp-mode-hook #'paredit-mode)
 (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
 (add-hook 'clojure-mode-hook #'paredit-mode)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 ;; END hooks
 
 ;; Detect JS files and enable js2-mode
