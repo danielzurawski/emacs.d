@@ -43,8 +43,12 @@
 (unless (package-installed-p 'undo-tree)
   (package-install 'undo-tree))
 
+(unless (package-installed-p 'js2-mode)
+  (package-install 'js2-mode))
+
 (unless (package-installed-p 'magit)
   (package-install 'magit))
+
 ;; END
 
 (require 'exec-path-from-shell)
@@ -86,6 +90,9 @@
 (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
 (add-hook 'clojure-mode-hook #'paredit-mode)
 ;; END hooks
+
+;; Detect JS files and enable js2-mode
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
