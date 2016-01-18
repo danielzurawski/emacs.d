@@ -49,6 +49,9 @@
 (unless (package-installed-p 'magit)
   (package-install 'magit))
 
+(unless (package-installed-p 'auto-complete)
+  (package-install 'auto-complete))
+
 ;; END
 
 (require 'exec-path-from-shell)
@@ -61,6 +64,7 @@
 
 (load-theme 'solarized-dark t)
 (setq x-underline-at-descent-line t)
+(setq-default indent-tabs-mode nil)
 
 ;; Key settings
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
@@ -83,6 +87,7 @@
 
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+(ac-config-default)
 
 ;; HOOKS
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
@@ -108,4 +113,3 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
