@@ -8,8 +8,6 @@
 (setq package-user-dir (concat dotfiles-dir "elpa"))
 
 (add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-(add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
 
 ;; Install packages for clean .emacs.d (no /elpa dir)
@@ -49,14 +47,26 @@
 (unless (package-installed-p 'magit)
   (package-install 'magit))
 
-(unless (package-installed-p 'auto-complete)
-  (package-install 'auto-complete))
+(unless (package-installed-p 'centered-cursor-mode)
+  (package-install 'centered-cursor-mode))
+
+(unless (package-installed-p 'helm)
+  (package-install 'helm))
+
+(unless (package-installed-p 'projectile)
+  (package-install 'projectile))
+
+(unless (package-installed-p 'helm-projectile)
+  (package-install 'helm-projectile))
 
 ;; END
 
 (require 'exec-path-from-shell)
 (require 'multiple-cursors)
 (require 'paredit)
+(and
+ (require 'centered-cursor-mode)
+ (global-centered-cursor-mode +1))
 
 ;; Inherit $PATH from shell (for lein etc.)
 (when (memq window-system '(mac ns))
@@ -65,11 +75,31 @@
 (load-theme 'solarized-dark t)
 (setq x-underline-at-descent-line t)
 (setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+(setq tab-stop-list (number-sequence 4 200 4))
 
 ;; Key settings
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-<") 'emc/mark-previous-like-this)
 ;; (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+
+;; HELM config
+(helm-mode 1)
+(setq helm-buffers-fuzzy-matching t
+      helm-recentf-fuzzy-match    t)
+(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-x b") 'helm-buffers-list)
+(helm-autoresize-mode t)
+;; HELM config
+
+;; Projectile config
+(projectile-global-mode)
+(setq projectile-completion-system 'helm)
+(helm-projectile-on)
+(global-set-key (kbd "M-p") 'helm-projectile-find-file)
+;; END Projectile config
 
 (require 'undo-tree)
 (global-undo-tree-mode 1)
@@ -95,10 +125,21 @@
 (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
 (add-hook 'clojure-mode-hook #'paredit-mode)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; (add-hook 'before-save-hook
+;;           (lambda ()
+;;             (untabify (point-min) (point-max))))
 ;; END hooks
 
-;; Detect JS files and enable js2-mode
+;; Detect JS files and enable js2-mode and Tern
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'load-path "/Users/dan/git/tern/emacs/")
+(autoload 'tern-mode "tern.el" nil t)
+(add-hook 'js2-mode-hook (lambda () (tern-mode t)))
+(eval-after-load 'tern
+   '(progn
+      (require 'tern-auto-complete)
+      (tern-ac-setup)))
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
