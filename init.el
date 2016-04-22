@@ -47,8 +47,8 @@
 (unless (package-installed-p 'magit)
   (package-install 'magit))
 
-(unless (package-installed-p 'centered-cursor-mode)
-  (package-install 'centered-cursor-mode))
+;;(unless (package-installed-p 'centered-cursor-mode)
+;;  (package-install 'centered-cursor-mode))
 
 (unless (package-installed-p 'helm)
   (package-install 'helm))
@@ -64,9 +64,9 @@
 (require 'exec-path-from-shell)
 (require 'multiple-cursors)
 (require 'paredit)
-(and
- (require 'centered-cursor-mode)
- (global-centered-cursor-mode +1))
+;;(and
+;; (require 'centered-cursor-mode)
+;; (global-centered-cursor-mode +1))
 
 ;; Inherit $PATH from shell (for lein etc.)
 (when (memq window-system '(mac ns))
@@ -154,3 +154,5 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'erase-buffer 'disabled nil)
+(put 'downcase-region 'disabled nil)
